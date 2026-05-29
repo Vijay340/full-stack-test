@@ -1,87 +1,161 @@
+
+
 $(document).ready(function () {
 
-    $('.slider').each(function () {
+    /* =========================================
+       DESKTOP SLIDER
+    ========================================= */
 
-        $(this).slick({
-            arrows: true,
-            dots: false,
-            infinite: true
+    function initDesktopSlider(){
+
+        $('.desktop-slider').each(function(){
+
+            // already initialized
+            if($(this).hasClass('slick-initialized')){
+                return;
+            }
+
+            $(this).slick({
+                slidesToShow:1,
+                slidesToScroll:1,
+                arrows:false,
+                dots:true,
+                infinite:true,
+                autoplay:true,
+                autoplaySpeed:3000,
+                fade:true,
+                adaptiveHeight:true
+            });
+
         });
-
-    });
-
- 
-
-$('.accordion-collapse.show .mobile-slider').slick({
-    arrows: true,
-    dots: true,
-    infinite: true,
-    slidesToShow: 1,
-    slidesToScroll: 1
-});
-
-$('.accordion-collapse').on('shown.bs.collapse', function () {
-
-    let slider = $(this).find('.mobile-slider');
-
-    if (!slider.hasClass('slick-initialized')) {
-
-        slider.slick({
-            arrows: true,
-            dots: true,
-            infinite: true,
-            slidesToShow: 1,
-            slidesToScroll: 1
-        });
-
-    } else {
-
-        slider.slick('setPosition');
 
     }
 
-});
+    function destroyDesktopSlider(){
 
+        $('.desktop-slider.slick-initialized').slick('unslick');
 
+    }
 
-
-    // Update Right Image
-    function updateImage(slider) {
+    function updateDesktopImage(slider){
 
         let currentSlide = $(slider).find('.slick-current');
 
         let image = currentSlide.attr('data-image');
 
-        $('#preview-image').attr('src', image);
+        if(image){
+            $('#desktop-preview').attr('src', image);
+        }
+
     }
 
-    // First Load
-    let activeSlider = $('.tab-pane.active .slider');
+    /* =========================================
+       MOBILE SLIDER
+    ========================================= */
 
-    updateImage(activeSlider);
+    function initMobileSlider(){
 
-    // On Slide Change
-    $('.slider').on('afterChange', function () {
+        $('.mobile-slider').each(function(){
 
-        updateImage(this);
+            if($(this).hasClass('slick-initialized')){
+                return;
+            }
+
+            $(this).slick({
+                slidesToShow:1,
+                slidesToScroll:1,
+                arrows:true,
+                dots:true,
+                infinite:true,
+                adaptiveHeight:true
+            });
+
+        });
+
+    }
+
+    function destroyMobileSlider(){
+
+        $('.mobile-slider.slick-initialized').slick('unslick');
+
+    }
+
+    /* =========================================
+       DEVICE CHECK
+    ========================================= */
+
+    function handleResponsiveSlider(){
+
+        if($(window).width() <= 768){
+
+            // MOBILE
+
+            destroyDesktopSlider();
+
+            initMobileSlider();
+
+        } else {
+
+            // DESKTOP
+
+            destroyMobileSlider();
+
+            initDesktopSlider();
+
+            setTimeout(function(){
+
+                $('.desktop-slider').slick('setPosition');
+
+                let firstDesktopSlider = $('.tab-pane.active .desktop-slider');
+
+                updateDesktopImage(firstDesktopSlider);
+
+            },300);
+
+        }
+
+    }
+
+    /* FIRST LOAD */
+    handleResponsiveSlider();
+
+    /* RESIZE */
+    $(window).on('resize', function(){
+
+        handleResponsiveSlider();
 
     });
 
-    // On Tab Button Click
-    $('button[data-bs-toggle="pill"]').on('click', function () {
+    /* DESKTOP AFTER CHANGE */
+    $(document).on('afterChange', '.desktop-slider', function(){
 
-        let tabId = $(this).attr('data-bs-target');
+        updateDesktopImage(this);
 
-        let activeSlider = $(tabId).find('.slider');
+    });
 
-        setTimeout(function () {
+    /* TAB CLICK */
+   $('button[data-bs-toggle="pill"]').on('shown.bs.tab', function (e) {
+    let target = $(e.target).attr("data-bs-target");
+    let activeSlider = $(target).find('.desktop-slider');
+    if(activeSlider.hasClass('slick-initialized')){
+        activeSlider.slick('setPosition');
+        activeSlider.slick('refresh');
+    }
+    updateDesktopImage(activeSlider);
+});
 
-            activeSlider.slick('setPosition');
+    /* ACCORDION OPEN */
+    $('.accordion-collapse').on('shown.bs.collapse', function(){
 
-            updateImage(activeSlider);
+        let slider = $(this).find('.mobile-slider');
 
-        }, 200);
+        setTimeout(function(){
+
+            slider.slick('setPosition');
+
+        },300);
 
     });
 
 });
+

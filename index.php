@@ -131,6 +131,7 @@
             $(this).next('.validation-error').hide();
         });
 
+        // on submit
         $(document).on('click', '#submit', function(){
             var tabName = $("#tab_name").val();
             if (tabName == ''){
@@ -179,6 +180,7 @@
                     $('#second_image')[0].files[0]
                 );
             }
+            // aajx call
             $.ajax({
 
                 type: 'POST',

@@ -1,7 +1,6 @@
 <?php include '../config/db.php'; ?>
 <!DOCTYPE html>
 <html>
-
 <head>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,10 +14,10 @@
     <!-- Slick Slider -->
 
     <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+        href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
 
     <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+        href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
 
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Titillium+Web:wght@600;700&display=swap" rel="stylesheet">
 
@@ -28,422 +27,207 @@
 
 <body>
 
-<div class="container py-4">
+    <div class="container py-4">
+        <!-- BUTTONS -->
+        <div class="mb-4 d-flex gap-2">
+            <a class="btn btn-primary" href="../index.php">
+                Add Slide
+            </a>
 
-    <!-- BUTTONS -->
-
-    <div class="mb-4 d-flex gap-2">
-
-        <a class="btn btn-primary" href="../index.php">
-            Add Slide
-        </a>
-
-        <a class="btn btn-primary" href="slide_list.php">
-            Show Slide List
-        </a>
-
-    </div>
-
-
-
-
-
-    <!-- ================= DESKTOP ================= -->
-<div class="desktop-layout">
-    <div class="slider-section">
-
-    <div class="section-heading">
-        <h2>DelphianLogic in Action</h2>
-        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
-    </div>
-
-    <div class="slider-wrapper">
-
-        <div class="row g-0 custom-slider-row">
-
-            <!-- LEFT -->
-            <div class="col-left">
-
-                <div class="nav flex-column nav-pills left-tabs">
-
-                    <?php
-                    $tabs = $conn->query("SELECT second_image, tab_name FROM sliders");
-                    $first = true;
-
-                    while($tab = $tabs->fetch_assoc()) {
-                    ?>
-
-                    <button
-                        class="nav-link <?= $first ? 'active' : '' ?>"
-                        data-bs-toggle="pill"
-                        data-bs-target="#<?= str_replace(' ','_',strtolower($tab['tab_name'])) ?>">
-
-                        
-                        
-                        
-<img src="../assets/uploads/<?php echo $tab['second_image']; ?>" style="height: 42px;" >
-                        <?= $tab['tab_name'] ?>
-
-                    </button>
-
-                    <?php $first = false; } ?>
-
-                </div>
-
-            </div>
-
-            <!-- CENTER -->
-            <div class="col-middle">
-
-                <div class="tab-content h-100">
-
-                    <?php
-                    $tabs2 = $conn->query("SELECT DISTINCT tab_name FROM sliders");
-                    $first2 = true;
-
-                    while($tab2 = $tabs2->fetch_assoc()) {
-
-                        $tabName = $tab2['tab_name'];
-                    ?>
-
-                    <div
-                        class="tab-pane fade h-100 <?= $first2 ? 'show active' : '' ?>"
-                        id="<?= str_replace(' ','_',strtolower($tabName)) ?>">
-
-                        <div class="desktop-slider center-content">
-
-                            <?php
-                            $slides = $conn->query("SELECT * FROM sliders WHERE tab_name='$tabName'");
-
-                            while($slide = $slides->fetch_assoc()) {
-
-                                $imagePath = '../assets/uploads/' . $slide['image'];
-                            ?>
-
-                            <div
-                                class="slide-item"
-                                data-image="<?= $imagePath ?>">
-
-                                <span class="slide-tag">
-                                    DIGITAL LEARNING INFRASTRUCTURE
-                                </span>
-
-                                <h3><?= $slide['title'] ?></h3>
-
-                                <p><?= $slide['description'] ?></p>
-
-                                <a href="#" class="learn-btn">
-                                    Learn More →
-                                </a>
-
-                            </div>
-
-                            <?php } ?>
-
-                        </div>
-
-                    </div>
-
-                    <?php $first2 = false; } ?>
-
-                </div>
-
-            </div>
-
-            <!-- RIGHT -->
-            <div class="col-right">
-
-                <div class="image-column">
-
-                    <img
-                        id="desktop-preview"
-                        src=""
-                        class="preview-image">
-
-                </div>
-
-            </div>
+            <a class="btn btn-primary" href="slide_list.php">
+                Show Slide List
+            </a>
 
         </div>
+        <!-- ================= DESKTOP ================= -->
+        <div class="desktop-layout">
+            <div class="slider-section">
 
-    </div>
+                <div class="section-heading">
+                    <h2>DelphianLogic in Action</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+                </div>
 
-</div>
-</div>
+                <div class="slider-wrapper">
+                    <div class="row g-0 custom-slider-row">
+                        <!-- LEFT -->
+                        <div class="col-left">
+                            <div class="nav flex-column nav-pills left-tabs">
 
+                                <?php
+                                $tabs = $conn->query("SELECT second_image, tab_name FROM sliders");
+                                $first = true;
 
+                                while ($tab = $tabs->fetch_assoc()) {
+                                ?>
 
+                                    <button
+                                        class="nav-link <?= $first ? 'active' : '' ?>"
+                                        data-bs-toggle="pill"
+                                        data-bs-target="#<?= str_replace(' ', '_', strtolower($tab['tab_name'])) ?>">
 
-    <!-- ================= MOBILE ================= -->
+                                        <img src="../assets/uploads/<?php echo $tab['second_image']; ?>" style="height: 42px;">
+                                        <?= $tab['tab_name'] ?>
 
-    <div class="mobile-layout">
+                                    </button>
+                                <?php $first = false;
+                                } ?>
 
-        <div class="accordion" id="mobileAccordion">
+                            </div>
+                        </div>
 
-            <?php
+                        <!-- CENTER -->
+                        <div class="col-middle">
+                            <div class="tab-content h-100">
+                                <?php
+                                $tabs2 = $conn->query("SELECT DISTINCT tab_name FROM sliders");
+                                $first2 = true;
 
-            $mobileTabs = $conn->query("SELECT DISTINCT tab_name FROM sliders");
+                                while ($tab2 = $tabs2->fetch_assoc()) {
 
-            $firstMobile = true;
-            $count = 0;
+                                    $tabName = $tab2['tab_name'];
+                                ?>
 
-            while($mobileTab = $mobileTabs->fetch_assoc()) {
+                                    <div
+                                        class="tab-pane fade h-100 <?= $first2 ? 'show active' : '' ?>"
+                                        id="<?= str_replace(' ', '_', strtolower($tabName)) ?>">
 
-                $mobileTabName = $mobileTab['tab_name'];
+                                        <div class="desktop-slider center-content">
 
-            ?>
+                                            <?php
+                                            $slides = $conn->query("SELECT * FROM sliders WHERE tab_name='$tabName'");
 
-            <div class="accordion-item mb-3">
+                                            while ($slide = $slides->fetch_assoc()) {
 
-                <h2 class="accordion-header">
+                                                $imagePath = '../assets/uploads/' . $slide['image'];
+                                            ?>
 
-                    <button
-                        class="accordion-button <?= $firstMobile ? '' : 'collapsed' ?>"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#collapse<?= $count ?>">
+                                                <div
+                                                    class="slide-item"
+                                                    data-image="<?= $imagePath ?>">
 
-                        <?= $mobileTabName ?>
+                                                    <span class="slide-tag">
+                                                        DIGITAL LEARNING INFRASTRUCTURE
+                                                    </span>
 
-                    </button>
+                                                    <h3><?= $slide['title'] ?></h3>
 
-                </h2>
+                                                    <p><?= $slide['description'] ?></p>
 
-                <div
-                    id="collapse<?= $count ?>"
-                    class="accordion-collapse collapse <?= $firstMobile ? 'show' : '' ?>"
-                    data-bs-parent="#mobileAccordion">
+                                                    <a href="#" class="learn-btn">
+                                                        Learn More →
+                                                    </a>
+                                                </div>
 
-                    <div class="accordion-body">
+                                            <?php } ?>
 
-                        <div class="mobile-slider">
-
-                            <?php
-
-                            $mobileSlides = $conn->query("SELECT * FROM sliders WHERE tab_name='$mobileTabName'");
-
-                            while($mobileSlide = $mobileSlides->fetch_assoc()) {
-
-                                $mobileImage = '../assets/uploads/' . $mobileSlide['image'];
-
-                            ?>
-
-                            <div>
-
-                                <div
-                                    class="mobile-slide"
-                                    style="background-image:url('<?= $mobileImage ?>')">
-
-                                    <div class="mobile-overlay">
-
-                                        <h4><?= $mobileSlide['title'] ?></h4>
-
-                                        <p><?= $mobileSlide['description'] ?></p>
-
+                                        </div>
                                     </div>
 
-                                </div>
+                                <?php $first2 = false;
+                                } ?>
 
                             </div>
-
-                            <?php } ?>
-
                         </div>
 
-                    </div>
+                        <!-- RIGHT -->
+                        <div class="col-right">
+                            <div class="image-column">
+                                <img
+                                    id="desktop-preview"
+                                    src=""
+                                    class="preview-image">
+                            </div>
 
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
+        <!-- ================= MOBILE ================= -->
+
+        <div class="mobile-layout">
+            <div class="accordion" id="mobileAccordion">
+
+                <?php
+
+                $mobileTabs = $conn->query("SELECT DISTINCT tab_name FROM sliders");
+
+                $firstMobile = true;
+                $count = 0;
+
+                while ($mobileTab = $mobileTabs->fetch_assoc()) {
+
+                    $mobileTabName = $mobileTab['tab_name'];
+
+                ?>
+
+                    <div class="accordion-item mb-3">
+                        <h2 class="accordion-header">
+
+                            <button
+                                class="accordion-button <?= $firstMobile ? '' : 'collapsed' ?>"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#collapse<?= $count ?>">
+
+                                <?= $mobileTabName ?>
+
+                            </button>
+
+                        </h2>
+                        <div
+                            id="collapse<?= $count ?>"
+                            class="accordion-collapse collapse <?= $firstMobile ? 'show' : '' ?>"
+                            data-bs-parent="#mobileAccordion">
+
+                            <div class="accordion-body">
+                                <div class="mobile-slider">
+
+                                    <?php
+
+                                    $mobileSlides = $conn->query("SELECT * FROM sliders WHERE tab_name='$mobileTabName'");
+
+                                    while ($mobileSlide = $mobileSlides->fetch_assoc()) {
+
+                                        $mobileImage = '../assets/uploads/' . $mobileSlide['image'];
+
+                                    ?>
+
+                                        <div>
+                                            <div
+                                                class="mobile-slide"
+                                                style="background-image:url('<?= $mobileImage ?>')">
+
+                                                <div class="mobile-overlay">
+                                                    <h4><?= $mobileSlide['title'] ?></h4>
+                                                    <p><?= $mobileSlide['description'] ?></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    <?php } ?>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php
+
+                    $firstMobile = false;
+                    $count++;
+                } ?>
 
             </div>
-
-            <?php
-
-                $firstMobile = false;
-                $count++;
-
-            } ?>
-
         </div>
-
     </div>
+    <!-- JS -->
 
-</div>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-
-
-
-<!-- JS -->
-
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-
-
-<script>
-
-$(document).ready(function () {
-
-    /* =========================================
-       DESKTOP SLIDER
-    ========================================= */
-
-    function initDesktopSlider(){
-
-        $('.desktop-slider').each(function(){
-
-            // already initialized
-            if($(this).hasClass('slick-initialized')){
-                return;
-            }
-
-            $(this).slick({
-                slidesToShow:1,
-                slidesToScroll:1,
-                arrows:false,
-                dots:true,
-                infinite:true,
-                autoplay:true,
-                autoplaySpeed:3000,
-                fade:true,
-                adaptiveHeight:true
-            });
-
-        });
-
-    }
-
-    function destroyDesktopSlider(){
-
-        $('.desktop-slider.slick-initialized').slick('unslick');
-
-    }
-
-    function updateDesktopImage(slider){
-
-        let currentSlide = $(slider).find('.slick-current');
-
-        let image = currentSlide.attr('data-image');
-
-        if(image){
-            $('#desktop-preview').attr('src', image);
-        }
-
-    }
-
-    /* =========================================
-       MOBILE SLIDER
-    ========================================= */
-
-    function initMobileSlider(){
-
-        $('.mobile-slider').each(function(){
-
-            if($(this).hasClass('slick-initialized')){
-                return;
-            }
-
-            $(this).slick({
-                slidesToShow:1,
-                slidesToScroll:1,
-                arrows:true,
-                dots:true,
-                infinite:true,
-                adaptiveHeight:true
-            });
-
-        });
-
-    }
-
-    function destroyMobileSlider(){
-
-        $('.mobile-slider.slick-initialized').slick('unslick');
-
-    }
-
-    /* =========================================
-       DEVICE CHECK
-    ========================================= */
-
-    function handleResponsiveSlider(){
-
-        if($(window).width() <= 768){
-
-            // MOBILE
-
-            destroyDesktopSlider();
-
-            initMobileSlider();
-
-        } else {
-
-            // DESKTOP
-
-            destroyMobileSlider();
-
-            initDesktopSlider();
-
-            setTimeout(function(){
-
-                $('.desktop-slider').slick('setPosition');
-
-                let firstDesktopSlider = $('.tab-pane.active .desktop-slider');
-
-                updateDesktopImage(firstDesktopSlider);
-
-            },300);
-
-        }
-
-    }
-
-    /* FIRST LOAD */
-    handleResponsiveSlider();
-
-    /* RESIZE */
-    $(window).on('resize', function(){
-
-        handleResponsiveSlider();
-
-    });
-
-    /* DESKTOP AFTER CHANGE */
-    $(document).on('afterChange', '.desktop-slider', function(){
-
-        updateDesktopImage(this);
-
-    });
-
-    /* TAB CLICK */
-   $('button[data-bs-toggle="pill"]').on('shown.bs.tab', function (e) {
-    let target = $(e.target).attr("data-bs-target");
-    let activeSlider = $(target).find('.desktop-slider');
-    if(activeSlider.hasClass('slick-initialized')){
-        activeSlider.slick('setPosition');
-        activeSlider.slick('refresh');
-    }
-    updateDesktopImage(activeSlider);
-});
-
-    /* ACCORDION OPEN */
-    $('.accordion-collapse').on('shown.bs.collapse', function(){
-
-        let slider = $(this).find('.mobile-slider');
-
-        setTimeout(function(){
-
-            slider.slick('setPosition');
-
-        },300);
-
-    });
-
-});
-
-</script>
-
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="../assets/js/custom.js"></script>
 </body>
 </html>

@@ -46,11 +46,11 @@ if(isset($_POST['id'])){
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Image</th>
-                        <th>Second Image</th>
                         <th>Tab Name</th>
                         <th>Title</th>
                         <th>Description</th>
+                        <th>Image</th>
+                        <th>Second Image</th>
                         <th width="180">Action</th>
                     </tr>
                 </thead>
@@ -64,6 +64,10 @@ if(isset($_POST['id'])){
                     ?>
                             <tr>
                                 <td><?= $slide['id'] ?></td>
+                                
+                                <td><?= $slide['tab_name'] ?></td>
+                                <td><?= $slide['title'] ?></td>
+                                <td><?= $slide['description'] ?></td>
                                 <td>
                                     <img
                                         src="<?= $imagePath ?>"
@@ -80,9 +84,6 @@ if(isset($_POST['id'])){
                                         style="object-fit: cover;">
 
                                 </td>
-                                <td><?= $slide['tab_name'] ?></td>
-                                <td><?= $slide['title'] ?></td>
-                                <td><?= $slide['description'] ?></td>
                                 <td>
                                     <a
                                         href="../index.php?id=<?= $slide['id'] ?>"
